@@ -1,7 +1,9 @@
 "use client";
 
-import Header from "@/components/Header";
-
 export default function Home() {
-  return <Header />;
+  return (
+    <div>
+      <h1>ola</h1>
+    </div>
+  );
 }
