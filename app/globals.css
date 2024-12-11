@@ -19,3 +19,27 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer base {
+  button {
+    @apply transition-transform transition-shadow duration-300 ease-out hover:shadow-md hover:scale-105;
+  }
+}
+
+@layer utilities {
+  .btn {
+    @apply px-4 py-2 text-sm capitalize rounded-xl;
+  }
+
+  .btn-primary {
+    @apply border bg-slate-700 border-slate-700 text-lime-400;
+  }
+
+  .btn-primary-outline {
+    @apply border border-lime-400 text-lime-400;
+  }
+
+  .btn-danger {
+    @apply text-white bg-red-600 border border-red-600;
+  }
+}
