@@ -21,6 +21,11 @@ body {
 }
 
 @layer base {
+
+  body {
+    @apply relative;
+  }
+
   button {
     @apply transition-transform transition-shadow duration-300 ease-out hover:shadow-md hover:scale-105;
   }
