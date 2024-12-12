@@ -80,6 +80,7 @@ export default function Home() {
             {DUMMY_DATA.map((expense) => {
               return (
                 <ExpenseCategoryItem
+                  key={expense.id}
                   color={expense.color}
                   title={expense.title}
                   total={expense.total}
