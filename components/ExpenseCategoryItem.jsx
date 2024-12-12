@@ -1,5 +1,5 @@
 "use client"
-import { currencyFormatter } from "@/lib/utils";
+import { currencyFormatter } from "@/lib/utilsFinance";
 
 function ExpenseCategoryItem({ color, title, total }) {
   return (

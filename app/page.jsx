@@ -1,10 +1,14 @@
 "use client";
-import { currencyFormatter } from "@/lib/utils";
-
+import dynamic from 'next/dynamic';
+import { currencyFormatter } from "@/lib/utilsFinance";
 import ExpenseCategoryItem from "@/components/ExpenseCategoryItem";
-
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+
+
+const DoughnutChart = dynamic(() =>
+  import('react-chartjs-2').then((mod) => mod.Doughnut),
+  { ssr: false }
+);
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -61,6 +65,7 @@ export default function Home() {
           {DUMMY_DATA.map((expense) => {
             return (
               <ExpenseCategoryItem
+                key={expense.id}
                 color={expense.color}
                 title={expense.title}
                 total={expense.total}
@@ -74,7 +79,7 @@ export default function Home() {
       <section className="py-6">
         <h3 className="text-2xl">Stats</h3>
         <div className="w-1/2 mx-auto">
-          <Doughnut
+          <DoughnutChart
             data={{
               labels: DUMMY_DATA.map((expense) => expense.title),
               datasets: [
@@ -82,8 +87,8 @@ export default function Home() {
                   label: "Expenses",
                   data: DUMMY_DATA.map((expense) => expense.total),
                   backgroundColor: DUMMY_DATA.map((expense) => expense.color),
-                  borderColor: ["#1645c5"],
-                  borderWidth: 5,
+                  borderColor: ["#181818"],
+                  borderWidth: 3,
                 },
               ],
             }}
