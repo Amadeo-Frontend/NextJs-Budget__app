@@ -3,20 +3,25 @@
 import { motion, AnimatePresence } from "framer-motion";
 
 function Modal({ show, onClose, children }) {
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose(false);
+    }
+  };
+
   return (
     <AnimatePresence>
       {show && (
-        // Overlay do modal, com fade-in/fade-out
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, backdropFilter: "blur(5px)" }}
           exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
           transition={{ duration: 0.2 }}
+          onClick={handleOverlayClick} // Clique no overlay
         >
-          {/* Conteúdo do modal com animação de entrada e saída */}
           <motion.div
-            className="relative container mx-auto max-w-2xl h-[80vh] rounded-3xl bg-background py-6 px-2 md:px-4 shadow-lg"
+            className="relative container mx-auto max-w-2xl h-[80vh] rounded-3xl bg-background py-6 px-2 md:px-4 shadow-lg overflow-y-auto scroll-smooth"
             initial={{ x: -200, opacity: 0, scale: 0.9 }}
             animate={{ x: 0, opacity: 1, scale: 1 }}
             exit={{ x: -200, opacity: 0, scale: 0.9 }}
