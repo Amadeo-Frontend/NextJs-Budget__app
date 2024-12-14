@@ -7,7 +7,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 // Toastify
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddIncomeModal from "@/components/modals/AddIncomeModal";
 
@@ -26,7 +26,10 @@ export default function Home() {
 
   return (
     <>
-    <AddIncomeModal show={showAddIncomeModal} onClose={setShowAddIncomeModal}/>
+      {/* Caso queira exibir toasts aqui também */}
+      <ToastContainer position="top-right" autoClose={3000} />
+
+      <AddIncomeModal show={showAddIncomeModal} onClose={setShowAddIncomeModal} />
       <main className="container max-w-2xl px-6 mx-auto">
         <section className="py-3">
           <small className="text-gray-400 text-md">My Balance</small>
@@ -36,7 +39,7 @@ export default function Home() {
         <section className="flex items-center gap-2 py-3">
           <button
             onClick={() => {
-              // Lógica para "+ Expenses" aqui
+              // Lógica para "+ Expenses"
             }}
             className="btn btn-primary"
           >

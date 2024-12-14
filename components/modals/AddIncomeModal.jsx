@@ -1,31 +1,21 @@
-'use client'
+"use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import Modal from "@/components/Modal";
 import { MoonLoader } from "react-spinners";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { currencyFormatter } from "@/lib/utilsFinance";
-// Firebase
-import { db } from "@/lib/firebase";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
-// Toastify
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { FinanceContext } from "@/lib/store/finance-context";
 
 const AddIncomeModal = ({ show, onClose }) => {
- const [loading, setLoading] = useState(false);
- const [income, setIncome] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { income, addIncomeItem, removeIncomeItem } = useContext(FinanceContext);
 
   const amountRef = useRef(null);
   const descriptionRef = useRef(null);
 
-  const addIncomeHandler = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -35,70 +25,24 @@ const AddIncomeModal = ({ show, onClose }) => {
       createdAt: new Date(),
     };
 
-    const collectionRef = collection(db, "income");
+    await addIncomeItem(newIncome);
 
-    try {
-      const docSnap = await addDoc(collectionRef, newIncome);
-
-      // Atualiza o estado local
-      setIncome((prevState) => [
-        ...prevState,
-        {
-          id: docSnap.id,
-          ...newIncome,
-        },
-      ]);
-
-      // Reseta os campos
-      descriptionRef.current.value = "";
-      amountRef.current.value = "";
-
-      // Toast de sucesso
-      toast.success("Dados adicionados com sucesso😁");
-    } catch (error) {
-      console.error(error.message);
-      // Toast de erro
-      toast.error("Erro, tente novamente! 😒");
-    } finally {
-      setLoading(false);
-      setShowAddIncomeModal(false);
-    }
+    // Reseta os campos
+    descriptionRef.current.value = "";
+    amountRef.current.value = "";
+    setLoading(false);
+    onClose(false);
   };
 
-  const deleteIncomeEntryHandler = async (incomeId) => {
-    const docRef = doc(db, "income", incomeId);
-    try {
-      await deleteDoc(docRef);
-      setIncome((prevState) => prevState.filter((i) => i.id !== incomeId));
-      toast.success("Entrada de renda excluída com sucesso! 😊");
-    } catch (error) {
-      console.log(error.message);
-      toast.error("Erro ao excluir entrada de renda. 😒");
-    }
+  const handleDelete = async (incomeId) => {
+    await removeIncomeItem(incomeId);
   };
-
-  useEffect(() => {
-    const getIncomeData = async () => {
-      const collectionRef = collection(db, "income");
-      const docsSnap = await getDocs(collectionRef);
-
-      const data = docsSnap.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: new Date(doc.data().createdAt.toMillis()),
-      }));
-
-      setIncome(data);
-    };
-
-    getIncomeData();
-  }, []);
 
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <Modal show={show} onClose={onClose}>
-        <form className="flex flex-col gap-4 p-4" onSubmit={addIncomeHandler}>
+        <form className="flex flex-col gap-4 p-4" onSubmit={handleSubmit}>
           <div className="input-group">
             <label
               htmlFor="amount"
@@ -135,11 +79,7 @@ const AddIncomeModal = ({ show, onClose }) => {
             />
           </div>
 
-          <button
-            type="submit"
-            className="self-start btn btn-primary"
-            disabled={loading}
-          >
+          <button type="submit" className="self-start btn btn-primary" disabled={loading}>
             {loading ? (
               <div className="flex items-center justify-center">
                 <MoonLoader color="var(--foreground)" size={16} />
@@ -154,7 +94,7 @@ const AddIncomeModal = ({ show, onClose }) => {
           <h3 className="text-2xl font-bold">Histórico</h3>
 
           {income.map((i) => (
-            <div className="flex justify-between item-center" key={i.id}>
+            <div className="flex justify-between items-center" key={i.id}>
               <div>
                 <p className="font-semibold">{i.description}</p>
                 <small className="text-xs">
@@ -166,11 +106,7 @@ const AddIncomeModal = ({ show, onClose }) => {
               </div>
               <p className="flex items-center gap-2">
                 {currencyFormatter(i.amount)}
-                <button
-                  onClick={() => {
-                    deleteIncomeEntryHandler(i.id);
-                  }}
-                >
+                <button onClick={() => handleDelete(i.id)}>
                   <FaRegTrashAlt />
                 </button>
               </p>
