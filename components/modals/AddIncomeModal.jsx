@@ -18,24 +18,35 @@ const AddIncomeModal = ({ show, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     const newIncome = {
       amount: parseFloat(amountRef.current.value),
       description: descriptionRef.current.value,
       createdAt: new Date(),
     };
-
-    await addIncomeItem(newIncome);
-
-    // Reseta os campos
-    descriptionRef.current.value = "";
-    amountRef.current.value = "";
-    setLoading(false);
-    onClose(false);
+  
+    try {
+      await addIncomeItem(newIncome);
+  
+      // Reseta os campos
+      descriptionRef.current.value = "";
+      amountRef.current.value = "";
+      onClose(false);
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao adicionar renda, tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDelete = async (incomeId) => {
-    await removeIncomeItem(incomeId);
+    try {
+      await removeIncomeItem(incomeId);
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao remover entrada de renda, tente novamente.");
+    }
   };
 
   return (
