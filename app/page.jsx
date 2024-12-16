@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { FinanceContext } from "@/lib/store/finance-context";
 import { currencyFormatter } from "@/lib/utilsFinance";
 import ExpenseCategoryItem from "@/components/ExpenseCategoryItem";
@@ -12,23 +12,35 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddIncomeModal from "@/components/modals/AddIncomeModal";
 
-
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Home() {
   const [showAddIncomeModal, setShowAddIncomeModal] = useState(false);
-  const { expenses } = useContext(FinanceContext);
+  const { expenses, income } = useContext(FinanceContext);
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    const newBalnce =
+      income.reduce((total, i) => {
+        return total + i.amount;
+      }, 0) -
+      expenses.reduce((total, e) => {
+        total + e.amount;
+      }, 0);
+
+      setBalance(newBalnce)
+  }, [expenses, income]);
 
   return (
-    <>
-      {/* Caso queira exibir toasts aqui também */}
-      <ToastContainer position="top-right" autoClose={3000} />
-
-      <AddIncomeModal show={showAddIncomeModal} onClose={setShowAddIncomeModal} />
+    <> 
+    <AddIncomeModal
+        show={showAddIncomeModal}
+        onClose={setShowAddIncomeModal}
+      />
       <main className="container max-w-2xl px-6 mx-auto">
         <section className="py-3">
           <small className="text-gray-400 text-md">My Balance</small>
-          <h2 className="text-4xl font-bold">{currencyFormatter(100000)}</h2>
+          <h2 className="text-4xl font-bold">{currencyFormatter(balance)}</h2>
         </section>
 
         <section className="flex items-center gap-2 py-3">

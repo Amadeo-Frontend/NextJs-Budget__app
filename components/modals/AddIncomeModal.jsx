@@ -19,7 +19,7 @@ const AddIncomeModal = ({ show, onClose }) => {
     setLoading(true);
   
     const newIncome = {
-      amount: parseFloat(amountRef.current.value),
+      amount: +amountRef.current.value,
       description: descriptionRef.current.value,
       createdAt: new Date(),
     };
