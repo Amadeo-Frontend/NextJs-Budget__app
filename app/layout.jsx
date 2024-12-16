@@ -28,10 +28,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <FinanceContextProvider>
-        <ToastContainer position="top-right" autoClose={3000} />
           <Header />
           {children}
         </FinanceContextProvider>
+        <ToastContainer position="top-right" autoClose={3000} />
       </body>
     </html>
   );
