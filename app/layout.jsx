@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import FinanceContextProvider from "@/lib/store/finance-context";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <FinanceContextProvider>
+        <ToastContainer position="top-right" autoClose={3000} />
           <Header />
           {children}
         </FinanceContextProvider>

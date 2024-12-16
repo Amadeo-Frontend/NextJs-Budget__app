@@ -5,7 +5,6 @@ import Modal from "@/components/Modal";
 import { MoonLoader } from "react-spinners";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { currencyFormatter } from "@/lib/utilsFinance";
-import { ToastContainer } from "react-toastify";
 import { FinanceContext } from "@/lib/store/finance-context";
 
 const AddIncomeModal = ({ show, onClose }) => {
@@ -51,7 +50,7 @@ const AddIncomeModal = ({ show, onClose }) => {
 
   return (
     <>
-      <ToastContainer position="top-right" autoClose={3000} />
+
       <Modal show={show} onClose={onClose}>
         <form className="flex flex-col gap-4 p-4" onSubmit={handleSubmit}>
           <div className="input-group">
