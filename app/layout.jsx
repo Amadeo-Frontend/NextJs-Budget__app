@@ -31,7 +31,16 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
         </FinanceContextProvider>
-        <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer  position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark" />
       </body>
     </html>
   );
