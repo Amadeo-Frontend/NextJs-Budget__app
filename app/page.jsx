@@ -25,15 +25,15 @@ export default function Home() {
         return total + i.amount;
       }, 0) -
       expenses.reduce((total, e) => {
-        total + e.amount;
+        return total + e.amount;
       }, 0);
 
-      setBalance(newBalnce)
+    setBalance(newBalnce);
   }, [expenses, income]);
 
   return (
-    <> 
-    <AddIncomeModal
+    <>
+      <AddIncomeModal
         show={showAddIncomeModal}
         onClose={setShowAddIncomeModal}
       />

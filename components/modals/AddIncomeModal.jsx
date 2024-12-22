@@ -6,6 +6,7 @@ import { MoonLoader } from "react-spinners";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { currencyFormatter } from "@/lib/utilsFinance";
 import { FinanceContext } from "@/lib/store/finance-context";
+import { toast } from "react-toastify";
 
 const AddIncomeModal = ({ show, onClose }) => {
   const [loading, setLoading] = useState(false);
