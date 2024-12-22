@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useContext } from "react";
-import Modal from "@/components/Modal";
+c
 import { MoonLoader } from "react-spinners";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { currencyFormatter } from "@/lib/utilsFinance";

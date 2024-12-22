@@ -11,11 +11,13 @@ import { Doughnut } from "react-chartjs-2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddIncomeModal from "@/components/modals/AddIncomeModal";
+import AddExpensesModal from "@/components/modals/AddExpensesModal";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Home() {
   const [showAddIncomeModal, setShowAddIncomeModal] = useState(false);
+  const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
   const { expenses, income } = useContext(FinanceContext);
   const [balance, setBalance] = useState(0);
 
@@ -33,9 +35,16 @@ export default function Home() {
 
   return (
     <>
-      <AddIncomeModal
+       {/* Add Income Modal */}
+       <AddIncomeModal
         show={showAddIncomeModal}
         onClose={setShowAddIncomeModal}
+      />
+
+      {/* Add Expenses Modal */}
+      <AddExpensesModal
+        show={showAddExpenseModal}
+        onClose={setShowAddExpenseModal}
       />
       <main className="container max-w-2xl px-6 mx-auto">
         <section className="py-3">
@@ -46,19 +55,19 @@ export default function Home() {
         <section className="flex items-center gap-2 py-3">
           <button
             onClick={() => {
-              // Lógica para "+ Expenses"
+              setShowAddExpenseModal(true);
             }}
             className="btn btn-primary"
           >
-            + Expenses
+            + Despesas
           </button>
           <button
-            className="btn btn-primary-outline"
             onClick={() => {
               setShowAddIncomeModal(true);
             }}
+            className="btn btn-primary-outline"
           >
-            + Income
+            + Renda
           </button>
         </section>
 
