@@ -1,36 +1,51 @@
-"use client";
+import { useContext } from "react";
 
-import { IoPieChartSharp } from "react-icons/io5";
+import { authContext } from "@/lib/store/auth-context";
 
-const Header = () => {
+import { ImStatsBars } from "react-icons/im";
+
+function Header() {
+  const { user, loading, logout } = useContext(authContext);
+
   return (
     <header className="container max-w-2xl px-6 py-6 mx-auto">
       <div className="flex items-center justify-between">
         {/* User information */}
-        <div className="flex items-center gap-2">
-          <div className="h-[40px] w-[40px] rounded-full overflow-hidden">
-            <img
-              src="https://placehold.co/100x100"
-              alt="Profile image"
-              className="object-cover w-full h-full"
-            />
-          </div>
-          <small>Hi, Leon</small>
-        </div>
+        {user && !loading && (
+          <div className="flex items-center gap-2">
+            {/* img */}
+            <div className="h-[40px] w-[40px] rounded-full overflow-hidden">
+              <img
+                className="object-cover w-full h-full"
+                src={user.photoURL}
+                alt={user.displayName}
+                referrerPolicy="no-referrer"
+              />
+            </div>
 
-        <nav className="flex items-center gap-2">
-          <div>
-            <a href="#chart">
-              <IoPieChartSharp className="text-2xl cursor-pointer hover:scale-105 fill-[var(--foreground)]" />
-            </a>
+            {/* name */}
+            <small>Hi, {user.displayName}!</small>
           </div>
-          <div>
-            <button className="btn btn-danger">Sign out</button>
-          </div>
-        </nav>
+        )}
+
+        {/* Right side of our navigation */}
+        {user && !loading && (
+          <nav className="flex items-center gap-4">
+            <div>
+              <a href="#stats">
+                <ImStatsBars className="text-2xl" />
+              </a>
+            </div>
+            <div>
+              <button onClick={logout} className="btn btn-danger">
+                Sign out
+              </button>
+            </div>
+          </nav>
+        )}
       </div>
     </header>
   );
-};
+}
 
 export default Header;
