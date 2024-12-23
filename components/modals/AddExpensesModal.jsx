@@ -12,6 +12,7 @@ function AddExpensesModal({ show, onClose }) {
   const [showAddExpense, setShowAddExpense] = useState(false);
 
   const { expenses, addExpenseItem, addCategory } = useContext(FinanceContext);
+  console.log("FinanceContext:", { expenses, addExpenseItem, addCategory });
 
   const titleRef = useRef(null);
   const colorRef = useRef(null);
