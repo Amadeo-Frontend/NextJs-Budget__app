@@ -6,10 +6,6 @@ import { currencyFormatter } from "@/lib/utilsFinance";
 import ExpenseCategoryItem from "@/components/ExpenseCategoryItem";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-
-// Toastify
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import AddIncomeModal from "@/components/modals/AddIncomeModal";
 import AddExpensesModal from "@/components/modals/AddExpensesModal";
 
@@ -96,7 +92,7 @@ export default function Home() {
                 datasets: [
                   {
                     label: "Expenses",
-                    data: expenses.map((expense) => expense.amount), // Substituição de 'total' por 'amount'
+                    data: expenses.map((expense) => expense.amount),
                     backgroundColor: expenses.map((expense) => expense.color),
                     borderColor: ["#18181b"],
                     borderWidth: 5,
@@ -107,8 +103,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-      {/* Coloque o ToastContainer aqui se não estiver no RootLayout */}
-      <ToastContainer />
     </>
   );
 }

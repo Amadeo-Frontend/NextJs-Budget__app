@@ -74,7 +74,7 @@ function AddExpensesModal({ show, onClose }) {
     }
 
     try {
-      await addCategory({ title, color, amount: 0, items: [] }); // Garantia de propriedades corretas
+      await addCategory({ title, color, amount: 0, items: [] });
       toast.success("Categoria adicionada com sucesso! 😊");
       setShowAddExpense(false);
       titleRef.current.value = "";
