@@ -191,7 +191,7 @@ export default function Home() {
                     deleteIncomeEntryHandler(i.id);
                   }}
                 >
-                  <FaRegTrashAlt />
+                  <FaRegTrashAlt  className="hover:scale-105 hover:fill-red-500"/>
                 </button>
               </p>
             </div>
