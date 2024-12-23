@@ -22,7 +22,7 @@ export default function Home() {
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    const newBalnce =
+    const newBalance =
       income.reduce((total, i) => {
         return total + i.amount;
       }, 0) -
@@ -30,13 +30,13 @@ export default function Home() {
         return total + e.amount;
       }, 0);
 
-    setBalance(newBalnce);
+    setBalance(newBalance);
   }, [expenses, income]);
 
   return (
     <>
-       {/* Add Income Modal */}
-       <AddIncomeModal
+      {/* Add Income Modal */}
+      <AddIncomeModal
         show={showAddIncomeModal}
         onClose={setShowAddIncomeModal}
       />
@@ -80,7 +80,7 @@ export default function Home() {
                 key={expense.id}
                 color={expense.color}
                 title={expense.title}
-                total={expense.total}
+                amount={expense.amount}
               />
             ))}
           </div>
@@ -96,7 +96,7 @@ export default function Home() {
                 datasets: [
                   {
                     label: "Expenses",
-                    data: expenses.map((expense) => expense.total),
+                    data: expenses.map((expense) => expense.amount), // Substituição de 'total' por 'amount'
                     backgroundColor: expenses.map((expense) => expense.color),
                     borderColor: ["#18181b"],
                     borderWidth: 5,
@@ -107,6 +107,8 @@ export default function Home() {
           </div>
         </section>
       </main>
+      {/* Coloque o ToastContainer aqui se não estiver no RootLayout */}
+      <ToastContainer />
     </>
   );
 }

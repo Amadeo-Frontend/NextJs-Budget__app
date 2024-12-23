@@ -17,6 +17,7 @@ function AddExpensesModal({ show, onClose }) {
   const colorRef = useRef(null);
 
   const addExpenseItemHandler = async () => {
+    // Validações antes de adicionar a despesa
     if (!selectedCategory) {
       toast.error("Por favor, selecione uma categoria.");
       return;
@@ -37,11 +38,11 @@ function AddExpensesModal({ show, onClose }) {
     const newExpense = {
       color: expense.color,
       title: expense.title,
-      total: expense.total + +expenseAmount,
+      amount: expense.amount + Number(expenseAmount),
       items: [
         ...expense.items,
         {
-          amount: +expenseAmount,
+          amount: Number(expenseAmount),
           createdAt: new Date(),
           id: uuidv4(),
         },
@@ -73,7 +74,7 @@ function AddExpensesModal({ show, onClose }) {
     }
 
     try {
-      await addCategory({ title, color, amount: 0, items: [] }); // Inicializando 'amount' e 'items'
+      await addCategory({ title, color, amount: 0, items: [] }); // Garantia de propriedades corretas
       toast.success("Categoria adicionada com sucesso! 😊");
       setShowAddExpense(false);
       titleRef.current.value = "";
@@ -108,7 +109,7 @@ function AddExpensesModal({ show, onClose }) {
       {expenseAmount > 0 && (
         <div className="flex flex-col gap-4 mt-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl capitalize text-white">Selecione a categoria da despesa</h3>
+            <h3 className="text-2xl text-white capitalize">Selecione a categoria da despesa</h3>
             <button
               onClick={() => {
                 setShowAddExpense(true);
@@ -130,7 +131,7 @@ function AddExpensesModal({ show, onClose }) {
 
               <div className="flex items-center gap-2">
                 <label htmlFor="colorPicker" className="text-sm font-medium text-gray-300">
-                  Escolha a Cor
+                  Escolha uma Cor
                 </label>
                 <input
                   id="colorPicker"
@@ -181,7 +182,7 @@ function AddExpensesModal({ show, onClose }) {
                       backgroundColor: expense.color,
                     }}
                   />
-                  <h4 className="capitalize text-white">{expense.title}</h4>
+                  <h4 className="text-white capitalize">{expense.title}</h4>
                 </div>
               </button>
             ))}
