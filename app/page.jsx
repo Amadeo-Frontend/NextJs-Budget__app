@@ -1,13 +1,17 @@
+// /app/page.jsx
+
 "use client";
 
 import { useState, useContext, useEffect } from "react";
 import { FinanceContext } from "@/lib/store/finance-context";
+import { AuthContext } from "@/lib/store/auth-context";
 import { currencyFormatter } from "@/lib/utilsFinance";
 import ExpenseCategoryItem from "@/components/ExpenseCategoryItem";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import AddIncomeModal from "@/components/modals/AddIncomeModal";
 import AddExpensesModal from "@/components/modals/AddExpensesModal";
+import SignIn from "@/components/SignIn";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -16,6 +20,7 @@ export default function Home() {
   const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
   const { expenses, income } = useContext(FinanceContext);
   const [balance, setBalance] = useState(0);
+  const { user, loading } = useContext(AuthContext);
 
   useEffect(() => {
     const newBalance =
@@ -28,6 +33,18 @@ export default function Home() {
 
     setBalance(newBalance);
   }, [expenses, income]);
+
+  if (loading) {
+    return (
+      <main className="flex items-center justify-center min-h-screen">
+        <p className="text-xl text-gray-400">Carregando...</p>
+      </main>
+    );
+  }
+
+  if (!user) {
+    return <SignIn />;
+  }
 
   return (
     <>
@@ -44,7 +61,7 @@ export default function Home() {
       />
       <main className="container max-w-2xl px-6 mx-auto">
         <section className="py-3">
-          <small className="text-gray-400 text-md">MeuBalanço Financeiro</small>
+          <small className="text-gray-400 text-md">Meu Balanço Financeiro</small>
           <h2 className="text-4xl font-bold">{currencyFormatter(balance)}</h2>
         </section>
 
@@ -93,7 +110,7 @@ export default function Home() {
                 labels: expenses.map((expense) => expense.title),
                 datasets: [
                   {
-                    label: "Expenses",
+                    label: "Despesas",
                     data: expenses.map((expense) => expense.amount),
                     backgroundColor: expenses.map((expense) => expense.color),
                     borderColor: ["#18181b"],

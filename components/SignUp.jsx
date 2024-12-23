@@ -1,34 +1,33 @@
-// /components/SignIn.jsx
+// /components/SignUp.jsx
 
 "use client";
 
 import React, { useContext, useState } from "react";
 import { AuthContext } from "@/lib/store/auth-context";
-import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 
-function SignIn() {
-  const { googleLoginHandler, signInWithEmail } = useContext(AuthContext);
+function SignUp() {
+  const { signUpWithEmail } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEmailSignIn = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmail(email, password);
-      toast.success("Login realizado com sucesso! 😊");
+      await signUpWithEmail(email, password);
+      toast.success("Registro realizado com sucesso! 😊");
     } catch (error) {
-      console.error("Erro ao fazer login com e-mail e senha:", error);
-      toast.error("Erro ao fazer login. Verifique suas credenciais.");
+      console.error("Erro ao registrar:", error);
+      toast.error("Erro ao registrar. Verifique os detalhes.");
     }
   };
 
   return (
     <main className="container max-w-2xl px-6 mx-auto">
-      <h1 className="mb-6 text-6xl font-bold text-center">Seja bem-vindo(a) 👋</h1>
+      <h1 className="mb-6 text-6xl font-bold text-center">Crie sua Conta 👋</h1>
 
       <div className="flex flex-col overflow-hidden bg-black shadow-md shadow-slate-500 rounded-2xl">
-        <div className="h-48">
+        <div className="h-52">
           <img
             className="object-cover w-full h-full"
             src="https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg"
@@ -37,18 +36,10 @@ function SignIn() {
         </div>
 
         <div className="px-4 py-4">
-          <h3 className="text-2xl text-center">Faça login usando uma conta do Google ou E-mail</h3>
+          <h3 className="text-2xl text-center">Registre-se usando E-mail e Senha</h3>
 
-          {/* Botão de Login com Google */}
-          <button
-            onClick={googleLoginHandler}
-            className="flex items-center justify-center w-full gap-2 p-4 mx-auto mt-6 font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-800"
-          >
-            <FcGoogle className="text-2xl" /> Google
-          </button>
-
-          {/* Formulário de Login com E-mail */}
-          <form onSubmit={handleEmailSignIn} className="mt-6 space-y-4">
+          {/* Formulário de Registro */}
+          <form onSubmit={handleSignUp} className="mt-6 space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-white">
                 E-mail
@@ -81,17 +72,17 @@ function SignIn() {
 
             <button
               type="submit"
-              className="w-full p-4 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+              className="w-full p-4 font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
             >
-              Entrar com E-mail
+              Registrar-se
             </button>
           </form>
 
-          {/* Link para Registro */}
+          {/* Link para Login */}
           <p className="mt-4 text-sm text-center text-gray-400">
-            Não tem uma conta?{" "}
-            <a href="/signup" className="text-blue-400 hover:underline">
-              Registre-se
+            Já tem uma conta?{" "}
+            <a href="/signin" className="text-blue-400 hover:underline">
+              Faça Login
             </a>
           </p>
         </div>
@@ -100,4 +91,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;
