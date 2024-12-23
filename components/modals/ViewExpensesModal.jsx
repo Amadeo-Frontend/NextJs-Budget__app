@@ -9,34 +9,27 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 function ViewExpenseModal({ show, onClose, expense }) {
-  const { deleteExpenseItem, deleteExpenseCategory } = useContext(FinanceContext);
+  const { removeExpenseItem, removeExpenseCategory } = useContext(FinanceContext);
 
   const deleteExpenseHandler = async () => {
     try {
-      await deleteExpenseCategory(expense.id);
+      console.log("Attempting to delete expense category with ID:", expense.id);
+      await removeExpenseCategory(expense.id);
       toast.success("Despesa removida com sucesso! 😊");
       onClose(false); 
     } catch (error) {
-      console.log(error.message);
+      console.error("Erro ao remover despesa:", error);
       toast.error("Erro ao remover despesa. Por favor, tente novamente.");
     }
   };
 
   const deleteExpenseItemHandler = async (item) => {
     try {
-      // Remover o item da lista
-      const updatedItems = expense.items.filter((i) => i.id !== item.id);
-
-      // Atualizar o saldo da despesa
-      const updatedExpense = {
-        items: [...updatedItems],
-        amount: expense.amount - item.amount,
-      };
-
-      await deleteExpenseItem(updatedExpense, expense.id);
+      console.log("Attempting to delete expense item with ID:", item.id);
+      await removeExpenseItem(expense.id, item.id);
       toast.success("Item de despesa removido com sucesso! 😊");
     } catch (error) {
-      console.log(error.message);
+      console.error("Erro ao remover item de despesa:", error);
       toast.error("Erro ao remover item de despesa. Por favor, tente novamente.");
     }
   };
