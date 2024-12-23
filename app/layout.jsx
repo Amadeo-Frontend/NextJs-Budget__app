@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import FinanceContextProvider from "@/lib/store/finance-context";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,7 +33,7 @@ export default function RootLayout({ children }) {
           {children}
         </FinanceContextProvider>
         <ToastContainer  position="top-right"
-          autoClose={5000}
+          autoClose={3000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick

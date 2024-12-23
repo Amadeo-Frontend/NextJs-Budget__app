@@ -8,6 +8,7 @@ import { currencyFormatter } from "@/lib/utilsFinance";
 import { FinanceContext } from "@/lib/store/finance-context";
 import { toast } from "react-toastify";
 
+
 const AddIncomeModal = ({ show, onClose }) => {
   const [loading, setLoading] = useState(false);
   const { income, addIncomeItem, removeIncomeItem } = useContext(FinanceContext);
@@ -105,7 +106,7 @@ const AddIncomeModal = ({ show, onClose }) => {
           <h3 className="text-2xl font-bold">Histórico</h3>
 
           {income.map((i) => (
-            <div className="flex justify-between items-center" key={i.id}>
+            <div className="flex items-center justify-between" key={i.id}>
               <div>
                 <p className="font-semibold">{i.description}</p>
                 <small className="text-xs">
