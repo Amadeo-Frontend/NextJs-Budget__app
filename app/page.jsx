@@ -1,5 +1,3 @@
-// /app/page.jsx
-
 "use client";
 
 import { useState, useContext, useEffect } from "react";

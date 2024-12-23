@@ -1,5 +1,3 @@
-// /components/Header.jsx
-
 "use client";
 
 import { useContext } from "react";
