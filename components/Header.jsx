@@ -20,7 +20,9 @@ const Header = () => {
 
         <nav className="flex items-center gap-2">
           <div>
-            <IoPieChartSharp className="text-2xl cursor-pointer" />
+            <a href="#chart">
+              <IoPieChartSharp className="text-2xl cursor-pointer hover:scale-105 fill-[var(--foreground)]" />
+            </a>
           </div>
           <div>
             <button className="btn btn-danger">Sign out</button>
