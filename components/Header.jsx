@@ -24,7 +24,7 @@ function Header() {
             </div>
 
             {/* name */}
-            <small>Hi, {user.displayName}!</small>
+            <small>Olá, {user.displayName}!</small>
           </div>
         )}
 
@@ -37,7 +37,7 @@ function Header() {
               </a>
             </div>
             <div>
-              <button onClick={logout} className="btn btn-danger">
+              <button onClick={logout} className="btn btn-danger hover:bg-red-800">
                 Sign out
               </button>
             </div>
