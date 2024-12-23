@@ -77,6 +77,8 @@ export default function Home() {
                 color={expense.color}
                 title={expense.title}
                 amount={expense.amount}
+                id={expense.id}
+                items={expense.items}
               />
             ))}
           </div>

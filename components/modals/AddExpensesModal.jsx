@@ -97,7 +97,7 @@ function AddExpensesModal({ show, onClose }) {
           type="number"
           min={0.01}
           step={0.01}
-          placeholder="Digite sua despesa"
+          placeholder="Digite o valor de sua despesa"
           value={expenseAmount}
           onChange={(e) => {
             setExpenseAmount(e.target.value);
