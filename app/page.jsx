@@ -35,7 +35,7 @@ export default function Home() {
   if (loading) {
     return (
       <main className="flex items-center justify-center min-h-screen">
-        <p className="text-xl text-gray-400">Carregando...</p>
+        <div className="flex items-center justify-center w-8 text-yellow-700 bg-yellow-300 border-t-2 border-yellow-500 rounded-full loader animate-spin aspect-square">$</div>
       </main>
     );
   }
@@ -59,7 +59,9 @@ export default function Home() {
       />
       <main className="container max-w-2xl px-6 mx-auto">
         <section className="py-3">
-          <small className="text-gray-400 text-md">Meu Balanço Financeiro</small>
+          <small className="text-gray-400 text-md">
+            Meu Balanço Financeiro
+          </small>
           <h2 className="text-4xl font-bold">{currencyFormatter(balance)}</h2>
         </section>
 
