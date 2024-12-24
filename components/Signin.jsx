@@ -1,5 +1,3 @@
-// /components/SignIn.jsx
-
 "use client";
 
 import React, { useContext, useState, useEffect } from "react";

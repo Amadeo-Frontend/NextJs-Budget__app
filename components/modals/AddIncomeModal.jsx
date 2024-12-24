@@ -7,11 +7,13 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { currencyFormatter } from "@/lib/utilsFinance";
 import { FinanceContext } from "@/lib/store/finance-context";
 import { toast } from "react-toastify";
-
+import { AuthContext } from "@/lib/store/auth-context";
 
 const AddIncomeModal = ({ show, onClose }) => {
   const [loading, setLoading] = useState(false);
-  const { income, addIncomeItem, removeIncomeItem } = useContext(FinanceContext);
+  const { income, addIncomeItem, removeIncomeItem } =
+    useContext(FinanceContext);
+  const { user } = useContext(AuthContext);
 
   const amountRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -19,16 +21,17 @@ const AddIncomeModal = ({ show, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
+
     const newIncome = {
       amount: +amountRef.current.value,
       description: descriptionRef.current.value,
       createdAt: new Date(),
+      uid: user.uid,
     };
-  
+
     try {
       await addIncomeItem(newIncome);
-  
+
       // Reseta os campos
       descriptionRef.current.value = "";
       amountRef.current.value = "";
@@ -52,7 +55,6 @@ const AddIncomeModal = ({ show, onClose }) => {
 
   return (
     <>
-
       <Modal show={show} onClose={onClose}>
         <form className="flex flex-col gap-4 p-4" onSubmit={handleSubmit}>
           <div className="input-group">
@@ -91,7 +93,11 @@ const AddIncomeModal = ({ show, onClose }) => {
             />
           </div>
 
-          <button type="submit" className="self-start btn btn-primary" disabled={loading}>
+          <button
+            type="submit"
+            className="self-start btn btn-primary"
+            disabled={loading}
+          >
             {loading ? (
               <div className="flex items-center justify-center">
                 <MoonLoader color="var(--foreground)" size={16} />
@@ -106,7 +112,7 @@ const AddIncomeModal = ({ show, onClose }) => {
           <h3 className="text-2xl font-bold">Histórico</h3>
 
           {income.map((i) => (
-            <div className="flex justify-between items-center" key={i.id}>
+            <div className="flex items-center justify-between" key={i.id}>
               <div>
                 <p className="font-semibold">{i.description}</p>
                 <small className="text-xs">
