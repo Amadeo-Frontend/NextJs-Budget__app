@@ -88,7 +88,7 @@ function AddExpensesModal({ show, onClose }) {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 py-8">
         <label htmlFor="expenseAmount" className="text-sm font-medium text-gray-300">
           Insira um valor da despesa
         </label>
